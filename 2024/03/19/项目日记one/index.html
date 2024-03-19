@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>工作日记(一) | Annabelle</title><meta name="author" content="Annabelle"><meta name="copyright" content="Annabelle"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="对最近项目过程实施，经验总结一下，首先描述一下攻击路径以及情况： ​	占了同事的光，在外网获取到一个SQL注入的点，他转交给我了。MSSQL的注入，我尝试SQLMAP梭哈了，却是没跑出来，我查看漏洞验证的报文，且手工尝试后发现很明显也很简单的，而且还存在堆叠，但是SQLMAP为什么没跑出来呢？手工对payload进行编码，调试后，开启xp_cmd进行RCE成功了，获取到了初始访问权限，大概是SQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工作日记(一)">
+<meta property="og:url" content="https://worldisend.github.io/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0one/index.html">
+<meta property="og:site_name" content="Annabelle">
+<meta property="og:description" content="对最近项目过程实施，经验总结一下，首先描述一下攻击路径以及情况： ​	占了同事的光，在外网获取到一个SQL注入的点，他转交给我了。MSSQL的注入，我尝试SQLMAP梭哈了，却是没跑出来，我查看漏洞验证的报文，且手工尝试后发现很明显也很简单的，而且还存在堆叠，但是SQLMAP为什么没跑出来呢？手工对payload进行编码，调试后，开启xp_cmd进行RCE成功了，获取到了初始访问权限，大概是SQL">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-rdxrl1_1920x1080.png">
+<meta property="article:published_time" content="2024-03-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-19T15:39:01.567Z">
+<meta property="article:author" content="Annabelle">
+<meta property="article:tag" content="项目日记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-rdxrl1_1920x1080.png"><link rel="shortcut icon" href="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/user.png"><link rel="canonical" href="https://worldisend.github.io/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0one/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#210e10","bgDark":"#210e10","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '工作日记(一)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-03-19 23:39:01'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/modify.css"><meta name="generator" content="Hexo 7.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/user.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-rdxrl1_1920x1080.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Annabelle"><span class="site-name">Annabelle</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">工作日记(一)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-03-18T16:00:00.000Z" title="Created 2024-03-19 00:00:00">2024-03-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-03-19T15:39:01.567Z" title="Updated 2024-03-19 23:39:01">2024-03-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AB%8B%E7%9A%84flag/">立的flag</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>3mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="工作日记(一)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>对最近项目过程实施，经验总结一下，首先描述一下攻击路径以及情况：</p>
+<p>​	占了同事的光，在外网获取到一个SQL注入的点，他转交给我了。MSSQL的注入，我尝试SQLMAP梭哈了，却是没跑出来，我查看漏洞验证的报文，且手工尝试后发现很明显也很简单的，而且还存在堆叠，但是SQLMAP为什么没跑出来呢？手工对payload进行编码，调试后，开启xp_cmd进行RCE成功了，获取到了初始访问权限，大概是SQLMAP自动注入的时候编码有问题。</p>
+<p>​	枚举本地进程发现杀软Windows Defener，制作木马落地上线，因为本就是MSSQL服务账户的权限，可以直接用土豆提system的，但是在提的过程中马被Defener给杀了，beacon掉了，但是无所谓，又点了一下在提权后自动执行defener加白操作。把初始入口马给稳固了。然后发现了内网环境，发现了域环境。开始先留马做了维权。</p>
+<p>​	权限维持估摸着差不多，开始实施后渗透，Mimikatz抓密码直接抓到了域管的NTLM，然后定位域控，起隧道，至此还蛮顺利的，与控股5985没开，走Psexec尝试横向域控的时候，发现不太对劲，链接445，135超时，就直接走Smbexec上去，Smbexec这东西好处是只用走445，且是system权限，但是无法更改当前目录很难受。在上边查看进程时候发现了卡巴斯基，那就不奇怪了。</p>
+<p>​	至此细想了一下域管hash在手，域控似乎暂时没什么必要上去，开始找邮服，起了八怪的就是邮服死活摸不到，就像这目标不用邮服一样，那怎么可能呢？大概率是因为语言不通看不懂，误打误撞摸到了文服，里边一堆个人文件共享，也不知道哪些有价值，看了下能出网，就先点了留了马。</p>
+<p>​	邮服死活没找到，捎带着把内网情况捋顺了，摸到了大概率内网办公个人PC段，准备上去抓浏览器记录找邮服的，横一台就发现了卡巴斯基，横一台就发现了卡巴斯基，桌面也没找到什么密码本，有一台名为admin的PC机，尝试横过，发现445失败了，那台是脱域的。不断的横向去看这台机器的当前用户，也从域组域用户里去筛选可能手握实权的高价值目标。但是最后发现他们似乎真的不不用邮服，或者邮服不在内网里，在其他第三方托管，每台机器上都有一种聊天软件。似乎类似于企业微信。</p>
+<p>​	在有天晚上掐着时间点，估摸着他们应该是下班了。准备走RDP强登上去看他们的聊天软件里有没有什么，桌面里有没有什么。登上去还没来得及看，就看到桌面下边有卡巴，又被顶下去了。就刚刚赶好差了那么一丢丢运气。最后又尝试了登了一台，发现桌面也没什么东西，邮服死活就是找不到，最后把邮服放弃了，而且目标似乎也警觉知道有人进来了，后续木马出现了掉线情况。</p>
+<p>关于经验的总结：</p>
+<p>​	1.效率较慢，行动周期较长，可能也是因为刚上手这类项目，经验不足以让思路更灵活一些。</p>
+<p>​	2.免杀，免杀是个大问题，虽然木马在小组里有人专门做，但是每次都是现需要现做，木马经常本地测试了说正常，还搞了一堆分离什么的，传过去麻烦的要死，点了还连不回来。这是整个项目过程中我觉得最影响效率的了。自己的免杀我是没信心过卡巴EDR。登录个人机能看到是卡巴企业EDR，且有卡巴控制台的ip地址，但是登录上去企业面板不知道怎么加白下发策略。似乎就是木马免杀不太明显惊动目标了。所以今后可能得抽点时间提升自己的免杀技能，得随用随有。</p>
+<p>​	3.个人浏览器数据其中密码是加密的，但是我不会解，且目标上有卡巴mimikatz也上不去，目前唯一的依仗就是C2插件一键提取，但是木马经常出问题，所以被迫一台一台手动导浏览器信息，但是密码我不会解，后续这方面也得学习一下。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://worldisend.github.io">Annabelle</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://worldisend.github.io/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0one/">https://worldisend.github.io/2024/03/19/项目日记one/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0/">项目日记</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-rdxrl1_1920x1080.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0three/" title="工作日记(三)"><img class="cover" src="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-vqgp9l_1920x1080.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next</div><div class="next_info">工作日记(三)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0three/" title="工作日记(三)"><img class="cover" src="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-vqgp9l_1920x1080.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-19</div><div class="title">工作日记(三)</div></div></a></div><div><a href="/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0two/" title="工作日记(二)"><img class="cover" src="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-qzroeq_1920x1080.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-19</div><div class="title">工作日记(二)</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/user.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Annabelle</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0one/" title="工作日记(一)"><img src="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-rdxrl1_1920x1080.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工作日记(一)"/></a><div class="content"><a class="title" href="/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0one/" title="工作日记(一)">工作日记(一)</a><time datetime="2024-03-18T16:00:00.000Z" title="Created 2024-03-19 00:00:00">2024-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0three/" title="工作日记(三)"><img src="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-vqgp9l_1920x1080.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工作日记(三)"/></a><div class="content"><a class="title" href="/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0three/" title="工作日记(三)">工作日记(三)</a><time datetime="2024-03-18T16:00:00.000Z" title="Created 2024-03-19 00:00:00">2024-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0two/" title="工作日记(二)"><img src="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/Personage/wallhaven-qzroeq_1920x1080.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工作日记(二)"/></a><div class="content"><a class="title" href="/2024/03/19/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0two/" title="工作日记(二)">工作日记(二)</a><time datetime="2024-03-18T16:00:00.000Z" title="Created 2024-03-19 00:00:00">2024-03-19</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 By Annabelle</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a target="_blank" rel="noopener" href="https://butterfly.js.org/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="/js/tw_cn.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="7274845708" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-order="random" data-volume="0.3" data-lrctype="0" data-autoplay="true"> </div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
