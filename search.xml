@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>OSEP心得</title>
+      <link href="/2024/03/25/OSEP%E5%BF%83%E5%BE%97/"/>
+      <url>/2024/03/25/OSEP%E5%BF%83%E5%BE%97/</url>
+      
+        <content type="html"><![CDATA[<p>昨天收到了OffSec Experienced Pentester (OSEP) certification的通过邮件通知：</p><p><img src="https://raw.githubusercontent.com/WorldisEnd/blog.image/main/Image/NoteImage/image-20240326144728390.png" alt="image-20240326144728390"></p><p>证书原名是Advanced Evasion Techniques and Breaching Defense(PEN-300:)，1月23日报名的，截至目前共花了两个月的时间，期间还要正常早九晚六上下班。不过日常工作就是纯红，所以直接挑战的就是Labs，教材就没看，挑战Labs卡住了，再去看看教材，实际只用了过年假期那段时间把labs完成了，正儿八经的学习时间可能就半个多月。但是预约考试当前时区只能预约每个礼拜的周四，然后结合了一下自己的工作时间预约了3月21日的考试。当然在打完Labs之后还复习了一遍，总体上的思路方向与攻击方式是没什么问题的，多数问题都出现在细节上，才导致自己误判断。</p><p>3月21号中午十二点正式开始考试，比预想的要顺利一些，虽然过程中还是经常卡壳。历经了28个小时拿下了官方16个10分的Flag，还有一个特殊的Secret.txt，虽然官方只要求100分或是提交Secret.txt即可，但是寻思着钱花都花了，多玩会儿嘛。</p><p>是准备还计划搞个OSCE3的，但是目前在工作中碰到的最大问题还是EDR、AV的对抗问题，所以剩下两门准备等把免杀这一块深入研究一下后，再进行学习，暂时给自己留了一个月的时间来学习免杀。给自己加油！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习日记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 经验总结 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>工作日记(四)</title>
       <link href="/2024/03/24/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0four/"/>
       <url>/2024/03/24/%E9%A1%B9%E7%9B%AE%E6%97%A5%E8%AE%B0four/</url>
@@ -13,7 +38,7 @@
       
       <categories>
           
-          <category> 立的flag </category>
+          <category> 项目日记 </category>
           
       </categories>
       
@@ -38,14 +63,14 @@
       
       <categories>
           
-          <category> 立的flag </category>
+          <category> 项目日记 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 项目日记 </tag>
+            <tag> 经验总结 </tag>
             
         </tags>
       
@@ -63,14 +88,14 @@
       
       <categories>
           
-          <category> 立的flag </category>
+          <category> 项目日记 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 项目日记 </tag>
+            <tag> 经验总结 </tag>
             
         </tags>
       
@@ -88,14 +113,14 @@
       
       <categories>
           
-          <category> 立的flag </category>
+          <category> 项目日记 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 项目日记 </tag>
+            <tag> 经验总结 </tag>
             
         </tags>
       
